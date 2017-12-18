@@ -1,0 +1,73 @@
+{{diagnostic}}
+
+<div class='container' style='width: 500px; text-align: left;'>
+    <div [hidden]='submitted'>
+        <form #heroForm='ngForm' (ngSubmit)='onSubmit();'>
+            <div class='form-group'>
+                <label for='name'>Name: </label>
+                <input type='text'
+                       id='name'
+                       name='name'
+                       class='form-control'
+                       required minlength='3'
+                       [(ngModel)]='model.name'
+                       #spyName
+                       #nameInfo='ngModel'/>
+                <div [hidden]='nameInfo.valid || nameInfo.pristine' class='alert alert-danger'>
+                    Name is required and must be atleast 3 characters
+                </div>
+                <div>ToDo: remove this - {{model.name}}</div>
+                <div>ToDo: remove this - {{spyName.className}}</div>
+            </div>
+            <div class='form-group'>
+                <label for='powers'>Powers: </label>
+                <select
+                        class='form-control'
+                        id='powers'
+                        name='powers'
+                        required
+                        [(ngModel)]='model.power'
+                        #spyPowers
+                        #powersInfo='ngModel'>
+                    <option *ngFor='let pow of powers' [value]='pow'>{{pow}}</option>
+                </select>
+                <div [hidden]='powersInfo.valid || powersInfo.pristine' class='alert alert-danger'>
+                    You must select a power
+                </div>
+                <div>ToDo: remove this - {{model.power}}</div>
+                <div>ToDo: remove this - {{spyPowers.className}}</div>
+            </div>
+            <div class='form-group'>
+                <label for='alterEgo'>Alter-Ego: </label>
+                <input type='text' id='alterEgo' name='alterEgo' class='form-control' [(ngModel)]='model.alterEgo'
+                       #spyAlterEgo/>
+                ToDo: remove this - {{model.alterEgo}}
+                <div>ToDo: remove this - {{spyAlterEgo.className}}</div>
+            </div>
+
+            <button type='submit' class='btn btn-success' [disabled]='!heroForm.form.valid'>Submit</button>
+            <button type='button' class='btn btn-default' (click)='newHero(); heroForm.reset();'>New</button>
+
+        </form>
+    </div>
+    <div [hidden]='!submitted' class='table'>
+        <h2>You submitted: </h2>
+        <hr />
+        <div class='row'>
+            <div class='col-xs-3 font-weight-bold'>Name</div>
+            <div class='col-xs-9 pull-left text-primary'>{{model.name}}</div>
+        </div>
+        <div class='row'>
+            <div class='col-xs-3 font-weight-bold'>Powers</div>
+            <div class='col-xs-9 pull-left text-primary'>{{model.power}}</div>
+        </div>
+        <div class='row'>
+            <div class='col-xs-3 font-weight-bold'>Alter Ego</div>
+            <div class='col-xs-9 pull-left text-primary'>{{model.alterEgo}}</div>
+        </div>
+        <div>
+            <hr />
+            <button class='btn btn-primary' (click)='submitted=false;'>Edit</button>
+        </div>
+    </div>
+</div>
